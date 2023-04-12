@@ -1,0 +1,11 @@
+{
+    "appName": {
+        "message": "OpenMonarch"
+    },
+    "appShortName": {
+        "message": "OpenMonarch"
+    },
+    "appDescription": {
+        "message": "A Chromium-based extension to increase accessibility across the web."
+    }
+}
