@@ -1,0 +1,28 @@
+{
+    "name": "OpenMonarch",
+    "description": "A set of high-level global improvements to accessibility",
+    "version": "0.0.1",
+    "manifest_version": 3,
+
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "main.js", "helpers.js"
+            ],
+            "matches": ["<all_urls>"]
+        }
+    ],
+    "icons": { 
+       "128": "icons/icon128.png" 
+    },
+    "action": {
+        "default_popup": "popup/popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "css": ["open_monarch.css"],
+            "js": ["content_script.js"]
+        }
+    ]
+}
