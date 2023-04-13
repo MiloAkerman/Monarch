@@ -6,10 +6,6 @@ const replicate = new Replicate({
 
 chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
-        console.log(sender.tab ?
-            "from a content script:" + sender.tab.url :
-            "from the extension");
-
         // parse image on background to avoid CORS issues
         if (request["type"] == "captionImage") {
             replicate.run(
@@ -19,9 +15,12 @@ chrome.runtime.onMessage.addListener(
                         image: request["img"]
                     }
                 }
-            ).then(output => {
+            ).catch((error) => {
+                console.error(error);
+                sendResponse({ error: true, data: error})
+            }).then(output => {
                 console.log(output)
-                sendResponse({ data: output });
+                sendResponse({ error: false, data: output });
             });
         }
 
