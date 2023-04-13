@@ -12,6 +12,14 @@
     "icons": {
         "128": "assets/img/icons/icon128.png"
     },
+	"commands": {
+		"caption-image": {
+			"suggested_key": {
+				"default": "Ctrl+M"
+			},
+			"description": "Caption a focused image using CLIP model"
+		}
+	},
     "background": {
         "service_worker": "background.js"
     },
