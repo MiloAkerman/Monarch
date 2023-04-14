@@ -23,13 +23,35 @@ function nextFocusableElement() {
     }
 }*/
 
+function isImage(i) {
+    return i instanceof HTMLImageElement;
+}
+function findImage(node) {
+    if(isImage(node)) return node;
+    if(node.getElementsByTagName("img").length > 0) return node.getElementsByTagName("img")[0];
+    return false;
+} 
+
 chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
     if (request.type == "request_focused_img") {
-        if(document.activeElement.src) { 
-            sendResponse({ error: false, data: document.activeElement.src });
-            console.log(document.activeElement);
+        let foundImage = findImage(document.activeElement);
+        if(!foundImage) {
+            alert("ERROR: No image found!");
+            sendResponse({ error: true, data: "not_image" });
+            return;
         }
-        else sendResponse({ error: true, data: "not_image" });
+
+        console.log(foundImage);
+        if(foundImage.complete) {
+            console.log("Image complete, requesting...");
+            sendResponse({ error: false, data: foundImage.src });
+        } else {
+            console.log("Image not cached. Waiting... ");
+            foundImage.onload = () => {
+                console.log("All good. Image loaded.");
+                sendResponse({ error: false, data: foundImage.src });
+            }
+        }
     }
     if (request.type == "send_alert") {
         if(!request.error) alert("Image description: " + request.data)
