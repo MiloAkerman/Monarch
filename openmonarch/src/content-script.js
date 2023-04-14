@@ -23,8 +23,21 @@ function nextFocusableElement() {
     }
 }*/
 
+let mouseX, mouseY;
+document.onmousemove = function(e){
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+}
+
+function getUrlExtension(url) {
+    return url.split(/[#?]/)[0].split('.').pop().trim();
+}
 function isImage(i) {
-    return i instanceof HTMLImageElement;
+    return i.src != undefined && (
+        getUrlExtension(i.src) == "png" ||
+        getUrlExtension(i.src) == "jpg" ||
+        getUrlExtension(i.src) == "gif"
+    )
 }
 function findImage(node) {
     if(isImage(node)) return node;
