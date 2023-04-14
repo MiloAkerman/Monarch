@@ -14,6 +14,12 @@ chrome.commands.onCommand.addListener(async (command) => {
 
 		if (!image.error) requestCaption(image.data);
 		else return;
+	} else if(command == "caption-image-hover") {
+		const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
+		let image = await chrome.tabs.sendMessage(tab.id, { type: "request_hover_img" });
+
+		if (!image.error) requestCaption(image.data);
+		else return;
 	} else {
 		console.log("Command: " + command);
 	}

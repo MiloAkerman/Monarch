@@ -18,6 +18,12 @@
 				"default": "Ctrl+M"
 			},
 			"description": "Caption a focused image using CLIP model"
+		},
+        "caption-image-hover": {
+			"suggested_key": {
+				"default": "Ctrl+Comma"
+			},
+			"description": "Caption a hovered image using CLIP model"
 		}
 	},
     "background": {

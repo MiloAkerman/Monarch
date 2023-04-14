@@ -27,7 +27,7 @@ function findImage(node) {
 // Handles all messages received from the background script
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
-    // When message of shortcut press received, get detected image, wait for load, and send back
+    // When message of shortcut press received, get focused image, wait for load, and send back
     if (request.type == "request_focused_img") {
         let foundImage = findImage(document.activeElement);
         if (!foundImage) {
@@ -38,6 +38,31 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
         console.log(foundImage);
         // If image already cached, send right away. Otherwise, wait for load
+        if (foundImage.complete) {
+            console.log("Image complete, requesting...");
+            sendResponse({ error: false, data: foundImage.src });
+        } else {
+            console.log("Image not cached. Waiting... ");
+            foundImage.onload = () => {
+                console.log("All good. Image loaded.");
+                sendResponse({ error: false, data: foundImage.src });
+            }
+        }
+    // Similar to focused image, but instead uses image mouse is hovering over
+    } else if (request.type == "request_hover_img") {
+        if(!mouseX || !mouseY) {
+            alert("ERROR: ")
+        }
+
+        let foundImage = findImage(document.elementFromPoint(mouseX, mouseY));
+        if (!foundImage) {
+            alert("ERROR: No image hovered!");
+            sendResponse({ error: true, data: "not_image" });
+            return;
+        }
+
+        // If image already cached, send right away. Otherwise, wait for load
+        // This isnt really necessary as a user wouldn't normally be hovering over an unloaded image, but just in case.
         if (foundImage.complete) {
             console.log("Image complete, requesting...");
             sendResponse({ error: false, data: foundImage.src });
