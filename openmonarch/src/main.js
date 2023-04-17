@@ -1,9 +1,21 @@
 import Replicate from "replicate";
 
-// Connect to Replicate server with API key
-const replicate = new Replicate({
-	auth: "4d20564813565c3014c5448216c6ee153788215a",
-});
+// Helper function to get API key
+function getAPIKey() {
+	chrome.storage.sync.get(["apikey"]).then((result) => {
+		if(!result) return null;
+		else return result.key;
+	});
+}
+
+// Connect to Replicate server with API key, if available
+let replicate;
+let apiKey = getAPIKey();
+if(apiKey) {
+	replicate = new Replicate({
+		auth: apiKey,
+	});
+}
 
 // Command listener
 chrome.commands.onCommand.addListener(async (command) => {
@@ -28,6 +40,22 @@ chrome.commands.onCommand.addListener(async (command) => {
 function requestCaption(imageLink) {
 	console.log("Requesting caption for " + imageLink + "...");
 	// Image needs to be parsed from background script to avoid CORS issues
+	if(!replicate) {
+		apiKey = getAPIKey();
+		if(!apiKey) {
+			chrome.tabs.query({ active: true, lastFocusedWindow: true }).then(([tab]) => {
+				chrome.tabs.sendMessage(tab.id, { type: "no_api_key", error: false }).then(() => {
+					chrome.tabs.create({ url: chrome.runtime.getURL("replicate_setup.html") });
+				})
+			});
+			return;
+		} else {
+			replicate = new Replicate({
+				auth: apiKey,
+			});
+		}
+	}
+
 	replicate.run(
 		"rmokady/clip_prefix_caption:9a34a6339872a03f45236f114321fb51fc7aa8269d38ae0ce5334969981e4cd8",
 		{

@@ -8,7 +8,7 @@
     "manifest_version": 3,
     "default_locale": "en",
     "minimum_chrome_version": "88",
-    "permissions": [],
+    "permissions": ["storage"],
     "icons": {
         "128": "assets/img/icons/icon128.png"
     },

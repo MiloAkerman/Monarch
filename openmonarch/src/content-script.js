@@ -75,6 +75,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         }
     }
 
+    // Start setup for Replicate key if none exist
+    if(request.type == "no_api_key") {
+        alert("No API key set! You will be redirected to a guide to set it up.");
+		sendResponse({ done: true });
+    }
+
     // Communicate error/info to end user
     if (request.type == "send_alert") {
         if (!request.error) alert("Image description: " + request.data)
