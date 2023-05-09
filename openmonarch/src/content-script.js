@@ -36,7 +36,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             return;
         }
 
-        console.log(foundImage);
         // If image already cached, send right away. Otherwise, wait for load
         if (foundImage.complete) {
             console.log("Image complete, requesting...");

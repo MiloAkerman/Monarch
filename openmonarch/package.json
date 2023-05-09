@@ -46,6 +46,10 @@
             {
                 "name": "content-script",
                 "src": "./src/content-script.js"
+            },
+            {
+                "name": "replicate_setup",
+                "src": "./src/replicate_setup.js"
             }
         ]
     },
