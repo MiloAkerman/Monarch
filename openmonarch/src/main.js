@@ -20,15 +20,15 @@ let apiKey = getAPIKey().then((apiKey) => {
 
 // Command listener
 chrome.commands.onCommand.addListener(async (command) => {
+	const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
+
 	// Initially bound to Ctrl + M (arbitrarily; there's probably a better key)
 	if (command == "caption-image") {
-		const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
 		let image = await chrome.tabs.sendMessage(tab.id, { type: "request_focused_img" });
 
 		if (!image.error) requestCaption(image.data);
 		else return;
 	} else if(command == "caption-image-hover") {
-		const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
 		let image = await chrome.tabs.sendMessage(tab.id, { type: "request_hover_img" });
 
 		if (!image.error) requestCaption(image.data);

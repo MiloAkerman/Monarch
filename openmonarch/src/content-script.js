@@ -50,7 +50,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     // Similar to focused image, but instead uses image mouse is hovering over
     } else if (request.type == "request_hover_img") {
         if(!mouseX || !mouseY) {
-            alert("ERROR: ")
+            alert("ERROR: No mouse coordinates detected!")
         }
 
         let foundImage = findImage(document.elementFromPoint(mouseX, mouseY));
