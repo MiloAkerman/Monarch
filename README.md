@@ -3,7 +3,7 @@
 # The Monarch Initiative
 <img src="https://img.shields.io/github/issues-pr/miloakerman/monarch"> <img src="https://img.shields.io/github/issues-raw/miloakerman/monarch"> <img src="https://img.shields.io/github/repo-size/miloakerman/monarch.svg">
 
-_**Monarch**_ (named after the common butterfly)or _The Monarch Initiative_ is an open-source web initiative to combat the growing inaccessibility of the internet through advocacy, creative work, technical projects, and crowdsourced talent. 
+_**Monarch**_ (named after the common butterfly) or _The Monarch Initiative_ is an open-source web initiative to combat the growing inaccessibility of the internet through advocacy, creative work, technical projects, and crowdsourced talent. 
 
 <hr>
 
